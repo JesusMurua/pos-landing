@@ -21,10 +21,9 @@ export default function Footer() {
               </div>
               <span className="font-bold text-white text-lg">POS Táctil</span>
             </div>
-            <p className="text-sm leading-relaxed mb-3">
+            <p className="text-sm leading-relaxed">
               El punto de venta para tu negocio mexicano.
             </p>
-            <p className="text-sm">Hecho en México 🇲🇽</p>
           </div>
 
           {/* Col 2 — Links */}

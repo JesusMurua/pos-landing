@@ -20,13 +20,11 @@ export default function Hero() {
             </span>
 
             <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-gray-900 tracking-tight leading-tight">
-              El POS para tu negocio mexicano.
+              Kaja, el sistema que no te complica.
             </h1>
 
             <p className="text-base md:text-xl text-gray-500 leading-relaxed max-w-lg">
-              Para fondas, abarrotes, cafés y más.
-              <br />
-              Funciona sin internet.
+Para negocios que no paran.
             </p>
 
             {/* CTA row */}
