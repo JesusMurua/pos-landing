@@ -8,15 +8,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "POS Táctil — El punto de venta para tu negocio mexicano",
+  title: "Kaja — Punto de venta simple para tu negocio",
   description:
-    "Sistema POS táctil para fondas, abarrotes, cafés y más. Funciona sin internet. 3 meses gratis.",
+    "Software punto de venta para restaurantes, tiendas, cafeterías y más. Funciona sin internet. Prueba 3 meses gratis.",
   openGraph: {
-    title: "POS Táctil — El punto de venta para tu negocio mexicano",
+    title: "Kaja — Punto de venta simple para tu negocio",
     description:
-      "Sistema POS táctil para fondas, abarrotes, cafés y más. Funciona sin internet. 3 meses gratis.",
+      "Software punto de venta para restaurantes, tiendas, cafeterías y más. Funciona sin internet. Prueba 3 meses gratis.",
     url: "https://postactil.app",
-    siteName: "POS Táctil",
+    siteName: "Kaja",
     locale: "es_MX",
     type: "website",
   },

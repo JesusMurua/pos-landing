@@ -17,12 +17,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">P</span>
+                <span className="text-white font-bold text-sm">K</span>
               </div>
-              <span className="font-bold text-white text-lg">POS Táctil</span>
+              <span className="font-bold text-white text-lg">Kaja</span>
             </div>
             <p className="text-sm leading-relaxed">
-              El punto de venta para tu negocio mexicano.
+              Punto de venta simple para negocios que no paran.
             </p>
           </div>
 
@@ -71,7 +71,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-          <span>© 2026 POS Táctil</span>
+          <span>© 2026 Kaja</span>
           <div className="flex gap-4">
             <a href="#" className="hover:text-white transition-colors">Términos</a>
             <a href="#" className="hover:text-white transition-colors">Privacidad</a>

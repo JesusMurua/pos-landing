@@ -40,7 +40,7 @@ Para negocios que no paran.
             {/* Social proof */}
             <p className="text-sm text-gray-400 flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-primary-500 inline-block" />
-              Más de 500 negocios ya usan POS Táctil
+              Más de 500 negocios ya usan Kaja
             </p>
           </div>
 
@@ -58,14 +58,14 @@ Para negocios que no paran.
                   </div>
                   <div className="flex-1 mx-2">
                     <div className="bg-white rounded-md px-3 py-1 text-xs text-gray-400 border border-gray-200 text-center">
-                      postactil.app
+                      kaja.app
                     </div>
                   </div>
                 </div>
 
-                {/* POS interface SVG */}
+                {/* Kaja interface */}
                 <div className="p-4">
-                  <POSIllustration />
+                  <KajaIllustration />
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@ Para negocios que no paran.
   );
 }
 
-function POSIllustration() {
+function KajaIllustration() {
   const products = [
     { name: "Taco", emoji: "🌮", price: "$25" },
     { name: "Agua", emoji: "💧", price: "$18" },

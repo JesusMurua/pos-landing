@@ -32,9 +32,9 @@ export default function Navbar() {
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P</span>
+              <span className="text-white font-bold text-sm">K</span>
             </div>
-            <span className="font-bold text-gray-900 text-lg">POS Táctil</span>
+            <span className="font-bold text-gray-900 text-lg">Kaja</span>
           </a>
 
           {/* Desktop nav */}
