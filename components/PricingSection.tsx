@@ -3,10 +3,9 @@
 import { useState } from "react";
 import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
-import { getPriceId, type PlanSlug, type BillingCycle } from "../lib/stripe-prices";
+import type { BillingCycle } from "../lib/stripe-prices";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 interface Plan {
   name: string;
@@ -242,35 +241,7 @@ const giros: Giro[] = [
 export default function PricingSection() {
   const [activeGiro, setActiveGiro] = useState(0);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const [errorPlan, setErrorPlan] = useState<string | null>(null);
   const currentGiro = giros[activeGiro];
-
-  const handleCheckout = async (plan: Plan) => {
-    setLoadingPlan(plan.slug);
-    setErrorPlan(null);
-
-    try {
-      const priceId = getPriceId(plan.slug as PlanSlug, currentGiro.slug, billingCycle);
-      const res = await fetch(`${API_URL}/api/subscription/checkout`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          priceId,
-          successUrl: `${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}&checkout=success`,
-          cancelUrl: window.location.href,
-        }),
-      });
-
-      if (!res.ok) throw new Error("Checkout failed");
-
-      const data: { url: string } = await res.json();
-      window.location.href = data.url;
-    } catch {
-      setErrorPlan(plan.slug);
-      setLoadingPlan(null);
-    }
-  };
 
   return (
     <section id="precios" className="py-20 md:py-28 bg-white">
@@ -386,34 +357,14 @@ export default function PricingSection() {
                 ))}
               </ul>
 
-              {plan.slug === "free" ? (
-                <Button
-                  variant="outline"
-                  size="md"
-                  href={`${APP_URL}/register?plan=free&giro=${currentGiro.slug}`}
-                  className="w-full"
-                >
-                  Empezar con este plan →
-                </Button>
-              ) : (
-                <div>
-                  <Button
-                    variant={plan.popular ? "primary" : "outline"}
-                    size="md"
-                    onClick={() => handleCheckout(plan)}
-                    loading={loadingPlan === plan.slug}
-                    disabled={loadingPlan !== null && loadingPlan !== plan.slug}
-                    className="w-full"
-                  >
-                    Empezar con este plan →
-                  </Button>
-                  {errorPlan === plan.slug && (
-                    <p className="text-xs text-red-500 text-center mt-2">
-                      Ocurrió un error. Intenta de nuevo.
-                    </p>
-                  )}
-                </div>
-              )}
+              <Button
+                variant={plan.popular ? "primary" : "outline"}
+                size="md"
+                href={`${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}`}
+                className="w-full"
+              >
+                Empezar con este plan →
+              </Button>
             </div>
           ))}
         </div>
