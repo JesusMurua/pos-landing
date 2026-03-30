@@ -1,4 +1,4 @@
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://restaurant-app-roan-two.vercel.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
 const footerLinks = [
   { label: "Inicio", href: "/" },

@@ -3,13 +3,16 @@
 import { useState } from "react";
 import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
+import { getPriceId, type PlanSlug, type BillingCycle } from "../lib/stripe-prices";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://restaurant-app-roan-two.vercel.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 interface Plan {
   name: string;
   slug: string;
   price: string;
+  annualPrice?: string;
   popular?: boolean;
   features: { label: string; included: boolean }[];
 }
@@ -24,6 +27,11 @@ const f = (label: string, included: boolean) => ({ label, included });
 const yes = (label: string) => f(label, true);
 const no = (label: string) => f(label, false);
 
+function formatMonthlyFromAnnual(annualPrice: string): string {
+  const num = parseInt(annualPrice.replace(/[$,]/g, ""), 10);
+  return `$${Math.ceil(num / 12)}`;
+}
+
 const giros: Giro[] = [
   {
     label: "Restaurante",
@@ -37,21 +45,21 @@ const giros: Giro[] = [
         ],
       },
       {
-        name: "Básico", slug: "basic", price: "$199",
+        name: "Básico", slug: "basic", price: "$199", annualPrice: "$1,990",
         features: [
           yes("Productos ilimitados"), yes("Mesas y modo mesero"), yes("KDS pantalla cocina"), yes("Kiosk autoservicio"),
           yes("Impresora térmica"), yes("Escáner de barras"), yes("Promociones y cupones"), yes("Reportes básicos"), no("CFDI / Facturación"),
         ],
       },
       {
-        name: "Pro", slug: "pro", price: "$499", popular: true,
+        name: "Pro", slug: "pro", price: "$499", annualPrice: "$4,990", popular: true,
         features: [
           yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Programa de lealtad"),
           yes("Clientes y fiado"), yes("Reportes avanzados"), yes("Comparativo sucursales"), no("API access"),
         ],
       },
       {
-        name: "Enterprise", slug: "enterprise", price: "$999",
+        name: "Enterprise", slug: "enterprise", price: "$999", annualPrice: "$9,990",
         features: [
           yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
           yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
@@ -71,21 +79,21 @@ const giros: Giro[] = [
         ],
       },
       {
-        name: "Básico", slug: "basic", price: "$149", popular: true,
+        name: "Básico", slug: "basic", price: "$149", annualPrice: "$1,490", popular: true,
         features: [
           yes("Productos ilimitados"), yes("Kiosk autoservicio"), yes("Comandas / KDS barra"), yes("Impresora térmica"),
           yes("Promociones y cupones"), yes("Reportes básicos"), yes("Usuarios ilimitados"), no("CFDI / Facturación"), no("Programa de lealtad"),
         ],
       },
       {
-        name: "Pro", slug: "pro", price: "$349",
+        name: "Pro", slug: "pro", price: "$349", annualPrice: "$3,490",
         features: [
           yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Programa de lealtad"),
           yes("Clientes frecuentes"), yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
         ],
       },
       {
-        name: "Enterprise", slug: "enterprise", price: "$799",
+        name: "Enterprise", slug: "enterprise", price: "$799", annualPrice: "$7,990",
         features: [
           yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
           yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
@@ -105,21 +113,21 @@ const giros: Giro[] = [
         ],
       },
       {
-        name: "Básico", slug: "basic", price: "$199",
+        name: "Básico", slug: "basic", price: "$199", annualPrice: "$1,990",
         features: [
           yes("Productos ilimitados"), yes("Mesas + barra (zonas)"), yes("Consumo corrido"), yes("Modo mesero"),
           yes("Impresora térmica"), yes("Promociones happy hour"), yes("Reportes básicos"), yes("Usuarios ilimitados"), no("CFDI / Facturación"),
         ],
       },
       {
-        name: "Pro", slug: "pro", price: "$499", popular: true,
+        name: "Pro", slug: "pro", price: "$499", annualPrice: "$4,990", popular: true,
         features: [
           yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Programa de lealtad"),
           yes("Clientes y fiado"), yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
         ],
       },
       {
-        name: "Enterprise", slug: "enterprise", price: "$999",
+        name: "Enterprise", slug: "enterprise", price: "$999", annualPrice: "$9,990",
         features: [
           yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
           yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
@@ -139,21 +147,21 @@ const giros: Giro[] = [
         ],
       },
       {
-        name: "Básico", slug: "basic", price: "$149", popular: true,
+        name: "Básico", slug: "basic", price: "$149", annualPrice: "$1,490", popular: true,
         features: [
           yes("Productos ilimitados"), yes("Escáner de barras"), yes("Impresora térmica"), yes("Folios personalizados"),
           yes("Promociones y descuentos"), yes("Reportes de ventas"), yes("Usuarios ilimitados"), no("Báscula integrada"), no("CFDI / Facturación"),
         ],
       },
       {
-        name: "Pro", slug: "pro", price: "$349",
+        name: "Pro", slug: "pro", price: "$349", annualPrice: "$3,490",
         features: [
           yes("Todo lo de Básico"), yes("Báscula integrada"), yes("CFDI / Facturación"), yes("Clientes y fiado"),
           yes("Hasta 3 sucursales"), yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
         ],
       },
       {
-        name: "Enterprise", slug: "enterprise", price: "$799",
+        name: "Enterprise", slug: "enterprise", price: "$799", annualPrice: "$7,990",
         features: [
           yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
           yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
@@ -173,21 +181,21 @@ const giros: Giro[] = [
         ],
       },
       {
-        name: "Básico", slug: "basic", price: "$149", popular: true,
+        name: "Básico", slug: "basic", price: "$149", annualPrice: "$1,490", popular: true,
         features: [
           yes("Productos ilimitados"), yes("Kiosk autoservicio"), yes("Impresora térmica"), yes("Escáner de barras"),
           yes("Promociones y cupones"), yes("Reportes de ventas"), yes("Usuarios ilimitados"), no("CFDI / Facturación"), no("Multi-sucursal"),
         ],
       },
       {
-        name: "Pro", slug: "pro", price: "$349",
+        name: "Pro", slug: "pro", price: "$349", annualPrice: "$3,490",
         features: [
           yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Programa de lealtad"),
           yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
         ],
       },
       {
-        name: "Enterprise", slug: "enterprise", price: "$799",
+        name: "Enterprise", slug: "enterprise", price: "$799", annualPrice: "$7,990",
         features: [
           yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
           yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
@@ -207,21 +215,21 @@ const giros: Giro[] = [
         ],
       },
       {
-        name: "Básico", slug: "basic", price: "$99", popular: true,
+        name: "Básico", slug: "basic", price: "$99", annualPrice: "$990", popular: true,
         features: [
           yes("Productos ilimitados"), yes("Impresora térmica"), yes("Escáner de barras"), yes("Folios personalizados"),
           yes("Promociones básicas"), yes("Reportes de ventas"), yes("Usuarios ilimitados"), no("CFDI / Facturación"), no("Multi-sucursal"),
         ],
       },
       {
-        name: "Pro", slug: "pro", price: "$249",
+        name: "Pro", slug: "pro", price: "$249", annualPrice: "$2,490",
         features: [
           yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Clientes y fiado"),
           yes("Programa de lealtad"), yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
         ],
       },
       {
-        name: "Enterprise", slug: "enterprise", price: "$599",
+        name: "Enterprise", slug: "enterprise", price: "$599", annualPrice: "$5,990",
         features: [
           yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
           yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
@@ -233,7 +241,36 @@ const giros: Giro[] = [
 
 export default function PricingSection() {
   const [activeGiro, setActiveGiro] = useState(0);
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [errorPlan, setErrorPlan] = useState<string | null>(null);
   const currentGiro = giros[activeGiro];
+
+  const handleCheckout = async (plan: Plan) => {
+    setLoadingPlan(plan.slug);
+    setErrorPlan(null);
+
+    try {
+      const priceId = getPriceId(plan.slug as PlanSlug, currentGiro.slug, billingCycle);
+      const res = await fetch(`${API_URL}/api/subscription/checkout`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          priceId,
+          successUrl: `${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}&checkout=success`,
+          cancelUrl: window.location.href,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Checkout failed");
+
+      const data: { url: string } = await res.json();
+      window.location.href = data.url;
+    } catch {
+      setErrorPlan(plan.slug);
+      setLoadingPlan(null);
+    }
+  };
 
   return (
     <section id="precios" className="py-20 md:py-28 bg-white">
@@ -244,7 +281,7 @@ export default function PricingSection() {
         />
 
         {/* Giro tabs */}
-        <div className="flex justify-center mb-12">
+        <div className="flex justify-center mb-8">
           <div className="flex gap-2 overflow-x-auto pb-2 px-1 max-w-full">
             {giros.map((giro, i) => (
               <button
@@ -259,6 +296,32 @@ export default function PricingSection() {
                 {giro.label}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* Billing cycle toggle */}
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex bg-gray-100 rounded-full p-1">
+            <button
+              onClick={() => setBillingCycle("monthly")}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+                billingCycle === "monthly"
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              Mensual
+            </button>
+            <button
+              onClick={() => setBillingCycle("annual")}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-colors cursor-pointer ${
+                billingCycle === "annual"
+                  ? "bg-white text-gray-900 shadow-sm"
+                  : "text-gray-600 hover:text-gray-900"
+              }`}
+            >
+              Anual — 2 meses gratis
+            </button>
           </div>
         </div>
 
@@ -282,9 +345,24 @@ export default function PricingSection() {
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-900">{plan.name}</h3>
                 <div className="mt-2">
-                  <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
-                  {plan.price !== "Gratis" && (
-                    <span className="text-sm text-gray-500">/mes</span>
+                  {plan.price === "Gratis" ? (
+                    <span className="text-3xl font-bold text-gray-900">Gratis</span>
+                  ) : billingCycle === "annual" && plan.annualPrice ? (
+                    <>
+                      <span className="text-3xl font-bold text-gray-900">
+                        {formatMonthlyFromAnnual(plan.annualPrice)}
+                      </span>
+                      <span className="text-sm text-gray-500">/mes</span>
+                      <span className="ml-2 inline-block text-xs bg-primary-50 text-primary-700 px-2 py-0.5 rounded-full font-medium">
+                        Anual
+                      </span>
+                      <p className="text-xs text-primary-600 mt-1">Ahorras 2 meses</p>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
+                      <span className="text-sm text-gray-500">/mes</span>
+                    </>
                   )}
                 </div>
               </div>
@@ -308,14 +386,34 @@ export default function PricingSection() {
                 ))}
               </ul>
 
-              <Button
-                variant={plan.popular ? "primary" : "outline"}
-                size="md"
-                href={`${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}`}
-                className="w-full"
-              >
-                Empezar con este plan →
-              </Button>
+              {plan.slug === "free" ? (
+                <Button
+                  variant="outline"
+                  size="md"
+                  href={`${APP_URL}/register?plan=free&giro=${currentGiro.slug}`}
+                  className="w-full"
+                >
+                  Empezar con este plan →
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    variant={plan.popular ? "primary" : "outline"}
+                    size="md"
+                    onClick={() => handleCheckout(plan)}
+                    loading={loadingPlan === plan.slug}
+                    disabled={loadingPlan !== null && loadingPlan !== plan.slug}
+                    className="w-full"
+                  >
+                    Empezar con este plan →
+                  </Button>
+                  {errorPlan === plan.slug && (
+                    <p className="text-xs text-red-500 text-center mt-2">
+                      Ocurrió un error. Intenta de nuevo.
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import Button from "./ui/Button";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://restaurant-app-roan-two.vercel.app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
 export default function Hero() {
   return (
