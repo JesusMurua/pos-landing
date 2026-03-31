@@ -18,6 +18,7 @@ interface Plan {
 
 interface Giro {
   label: string;
+  subtitle: string;
   slug: string;
   plans: Plan[];
 }
@@ -34,6 +35,7 @@ function formatMonthlyFromAnnual(annualPrice: string): string {
 const giros: Giro[] = [
   {
     label: "Restaurante",
+    subtitle: "Restaurantes, fondas, cocinas",
     slug: "restaurant",
     plans: [
       {
@@ -68,6 +70,7 @@ const giros: Giro[] = [
   },
   {
     label: "Café",
+    subtitle: "Cafeterías, juguerías, panaderías",
     slug: "cafe",
     plans: [
       {
@@ -102,6 +105,7 @@ const giros: Giro[] = [
   },
   {
     label: "Bar",
+    subtitle: "Bares, cantinas, antros",
     slug: "bar",
     plans: [
       {
@@ -136,6 +140,7 @@ const giros: Giro[] = [
   },
   {
     label: "Abarrotes / Retail",
+    subtitle: "Abarrotes, farmacias, ferreterías, papelerías",
     slug: "retail",
     plans: [
       {
@@ -170,7 +175,8 @@ const giros: Giro[] = [
   },
   {
     label: "Food Truck",
-    slug: "food-truck",
+    subtitle: "Taquerías, puestos, carritos",
+    slug: "foodtruck",
     plans: [
       {
         name: "Gratis", slug: "free", price: "Gratis",
@@ -204,6 +210,7 @@ const giros: Giro[] = [
   },
   {
     label: "General",
+    subtitle: "Bazares, servicios, uñas, cualquier negocio",
     slug: "general",
     plans: [
       {
@@ -258,13 +265,16 @@ export default function PricingSection() {
               <button
                 key={giro.slug}
                 onClick={() => setActiveGiro(i)}
-                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                className={`flex flex-col items-center px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors cursor-pointer ${
                   i === activeGiro
                     ? "bg-primary-600 text-white"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
-                {giro.label}
+                <span>{giro.label}</span>
+                <span className={`text-[10px] font-normal ${i === activeGiro ? "text-primary-100" : "text-gray-400"}`}>
+                  {giro.subtitle}
+                </span>
               </button>
             ))}
           </div>
