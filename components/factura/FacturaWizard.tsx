@@ -7,7 +7,7 @@ import StepDetallesCompra from "./StepDetallesCompra";
 import StepDatosFiscales from "./StepDatosFiscales";
 import StepExito from "./StepExito";
 import { lookupTicket, requestInvoice, ApiError } from "@/lib/api";
-import type { TicketData, FiscalData } from "@/lib/api";
+import type { TicketData, FiscalData, InvoiceResult } from "@/lib/api";
 
 const INITIAL_FISCAL: FiscalData = {
   rfc: "",
@@ -21,16 +21,19 @@ const INITIAL_FISCAL: FiscalData = {
 export default function FacturaWizard() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [ticket, setTicket] = useState<TicketData | null>(null);
+  const [totalCents, setTotalCents] = useState(0);
   const [fiscal, setFiscal] = useState<FiscalData>(INITIAL_FISCAL);
+  const [invoiceResult, setInvoiceResult] = useState<InvoiceResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async (orderId: string, totalCents: number) => {
+  const handleSearch = async (orderId: string, cents: number) => {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await lookupTicket(orderId, totalCents);
+      const data = await lookupTicket(orderId, cents);
       setTicket(data);
+      setTotalCents(cents);
       setStep(2);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Error inesperado. Intenta de nuevo.");
@@ -45,7 +48,8 @@ export default function FacturaWizard() {
     setError(null);
     setFiscal(data);
     try {
-      await requestInvoice(ticket.orderId, data);
+      const result = await requestInvoice(ticket.orderId, totalCents, data);
+      setInvoiceResult(result);
       setStep(4);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Error inesperado. Intenta de nuevo.");
@@ -57,7 +61,9 @@ export default function FacturaWizard() {
   const handleReset = () => {
     setStep(1);
     setTicket(null);
+    setTotalCents(0);
     setFiscal(INITIAL_FISCAL);
+    setInvoiceResult(null);
     setError(null);
   };
 
@@ -91,7 +97,12 @@ export default function FacturaWizard() {
             />
           )}
           {step === 4 && (
-            <StepExito email={fiscal.email} onReset={handleReset} />
+            <StepExito
+              email={fiscal.email}
+              pdfUrl={invoiceResult?.pdfUrl}
+              xmlUrl={invoiceResult?.xmlUrl}
+              onReset={handleReset}
+            />
           )}
         </div>
 

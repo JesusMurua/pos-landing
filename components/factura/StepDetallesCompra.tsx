@@ -48,7 +48,7 @@ export default function StepDetallesCompra({ ticket, onContinue, onBack }: StepD
         </div>
         <div className="px-4 py-3 flex justify-between">
           <span className="text-sm text-gray-500">Orden</span>
-          <span className="text-sm font-medium text-gray-900 font-mono">{ticket.orderId.slice(0, 8)}...</span>
+          <span className="text-sm font-medium text-gray-900 font-mono">{ticket.orderId}</span>
         </div>
         <div className="px-4 py-3 flex justify-between">
           <span className="text-sm text-gray-500">Total</span>

@@ -1,7 +1,7 @@
-const API_BASE = process.env.NEXT_PUBLIC_POS_API_URL || "";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 export interface TicketData {
-  orderId: string;
+  orderId: number;
   restaurantName: string;
   date: string;
   total: number;
@@ -17,6 +17,13 @@ export interface FiscalData {
   email: string;
 }
 
+export interface InvoiceResult {
+  invoiceId: number;
+  status: string;
+  pdfUrl: string;
+  xmlUrl: string;
+}
+
 export class ApiError extends Error {
   status: number;
   constructor(message: string, status: number) {
@@ -30,7 +37,7 @@ export async function lookupTicket(
   totalCents: number,
 ): Promise<TicketData> {
   const res = await fetch(
-    `${API_BASE}/api/public/invoicing/${encodeURIComponent(orderId)}?totalCents=${totalCents}`,
+    `${API_BASE}/api/publicinvoicing/${encodeURIComponent(orderId)}?totalCents=${totalCents}`,
   );
 
   if (!res.ok) {
@@ -40,20 +47,43 @@ export async function lookupTicket(
     if (res.status === 403) {
       throw new ApiError("El monto no coincide con el ticket.", 403);
     }
+    if (res.status === 429) {
+      throw new ApiError("Demasiadas solicitudes. Espera un momento e intenta de nuevo.", 429);
+    }
     throw new ApiError("Error al buscar el ticket. Intenta de nuevo.", res.status);
   }
 
-  return res.json();
+  const body = await res.json();
+  return {
+    orderId: body.orderId,
+    restaurantName: body.businessName,
+    date: body.issuedAt,
+    total: body.totalCents / 100,
+    items: body.items?.map((item: { name: string; quantity: number; totalCents: number }) => ({
+      name: item.name,
+      quantity: item.quantity,
+      price: item.totalCents / 100,
+    })),
+  };
 }
 
 export async function requestInvoice(
-  orderId: string,
+  orderId: number,
+  totalCents: number,
   fiscal: FiscalData,
-): Promise<void> {
-  const res = await fetch(`${API_BASE}/api/public/invoicing/request`, {
+): Promise<InvoiceResult> {
+  const res = await fetch(`${API_BASE}/api/publicinvoicing/${encodeURIComponent(orderId)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ orderId, ...fiscal }),
+    body: JSON.stringify({
+      totalCents,
+      rfc: fiscal.rfc,
+      legalName: fiscal.razonSocial,
+      zipCode: fiscal.codigoPostal,
+      taxRegime: fiscal.regimenFiscal,
+      useOfCfdi: fiscal.usoCfdi,
+      email: fiscal.email,
+    }),
   });
 
   if (!res.ok) {
@@ -67,6 +97,11 @@ export async function requestInvoice(
         422,
       );
     }
+    if (res.status === 429) {
+      throw new ApiError("Demasiadas solicitudes. Espera un momento e intenta de nuevo.", 429);
+    }
     throw new ApiError("Error al solicitar la factura. Intenta de nuevo.", res.status);
   }
+
+  return res.json();
 }
