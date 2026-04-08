@@ -55,7 +55,7 @@ export default function Navbar() {
             <Button variant="ghost" size="sm" href={`${APP_URL}/login`}>
               Iniciar sesión
             </Button>
-            <Button variant="primary" size="sm" href={`${APP_URL}/register`}>
+            <Button variant="primary" size="sm" href={`${APP_URL}/register?plan=free&giro=general&country=MX`}>
               Empezar gratis →
             </Button>
           </div>
@@ -97,7 +97,7 @@ export default function Navbar() {
             <Button variant="ghost" size="lg" href={`${APP_URL}/login`}>
               Iniciar sesión
             </Button>
-            <Button variant="primary" size="lg" href={`${APP_URL}/register`}>
+            <Button variant="primary" size="lg" href={`${APP_URL}/register?plan=free&giro=general&country=MX`}>
               Empezar gratis →
             </Button>
           </div>

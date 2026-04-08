@@ -16,7 +16,7 @@ export default function Hero() {
           <div className="flex flex-col gap-6">
             {/* Badge */}
             <span className="inline-flex items-center gap-1.5 bg-primary-50 text-primary-700 text-sm font-medium px-3 py-1 rounded-full w-fit border border-primary-200">
-              ✓ Gratis 3 meses — sin tarjeta
+              ✓ 14 días de prueba gratis — sin tarjeta
             </span>
 
             <h1 className="text-4xl md:text-5xl lg:text-[56px] font-bold text-gray-900 tracking-tight leading-tight">
@@ -29,7 +29,7 @@ Para negocios que no paran.
 
             {/* CTA row */}
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button variant="primary" size="lg" href={`${APP_URL}/register`}>
+              <Button variant="primary" size="lg" href={`${APP_URL}/register?plan=free&giro=general&country=MX`}>
                 Empezar gratis →
               </Button>
               <Button variant="ghost" size="lg" href="#how-it-works">

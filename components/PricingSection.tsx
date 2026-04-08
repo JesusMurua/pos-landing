@@ -255,7 +255,7 @@ export default function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title="Planes para cada negocio"
-          subtitle="3 meses gratis en cualquier plan. Sin tarjeta requerida."
+          subtitle="14 días de prueba gratis en cualquier plan. Sin tarjeta requerida."
         />
 
         {/* Giro tabs */}
@@ -370,7 +370,7 @@ export default function PricingSection() {
               <Button
                 variant={plan.popular ? "primary" : "outline"}
                 size="md"
-                href={`${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}`}
+                href={`${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}&country=MX`}
                 className="w-full"
               >
                 Empezar con este plan →

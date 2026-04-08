@@ -69,7 +69,7 @@ export default function HowItWorks() {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="primary" size="lg" href={`${APP_URL}/register`}>
+          <Button variant="primary" size="lg" href={`${APP_URL}/register?plan=free&giro=general&country=MX`}>
             Crear mi cuenta gratis →
           </Button>
         </div>

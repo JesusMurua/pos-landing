@@ -1,6 +1,8 @@
-export type PlanSlug = "basic" | "pro" | "enterprise";
+export type PlanSlug = "free" | "basic" | "pro" | "enterprise";
 export type BillingCycle = "monthly" | "annual";
 export type PricingGroup = "Restaurant" | "Standard" | "General";
+
+type PaidPlanSlug = Exclude<PlanSlug, "free">;
 
 const giroToGroup: Record<string, PricingGroup> = {
   restaurant: "Restaurant",
@@ -14,7 +16,7 @@ const giroToGroup: Record<string, PricingGroup> = {
 };
 
 const priceIds: Record<
-  PlanSlug,
+  PaidPlanSlug,
   Record<PricingGroup, Record<BillingCycle, string>>
 > = {
   basic: {
@@ -65,7 +67,8 @@ export function getPriceId(
   plan: PlanSlug,
   giroSlug: string,
   cycle: BillingCycle
-): string {
+): string | null {
+  if (plan === "free") return null;
   const group = giroToGroup[giroSlug];
   if (!group) {
     throw new Error(`Unknown giro slug: ${giroSlug}`);
