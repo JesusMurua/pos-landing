@@ -34,15 +34,16 @@ function formatMonthlyFromAnnual(annualPrice: string): string {
 
 const giros: Giro[] = [
   {
-    label: "Restaurante",
-    subtitle: "Restaurantes, fondas, cocinas",
+    label: "Restaurantes y Bares",
+    subtitle: "Restaurantes, fondas, bares, cantinas",
     slug: "restaurant",
     plans: [
       {
         name: "Gratis", slug: "free", price: "Gratis",
         features: [
-          yes("Hasta 50 productos"), yes("1 sucursal, 2 usuarios"), yes("Modo Mostrador básico"), yes("Cobro en efectivo"),
-          no("Mesas y mesero"), no("KDS pantalla cocina"), no("Kiosk autoservicio"), no("Impresora / escáner"), no("Promociones"),
+          yes("Hasta 50 productos"), yes("1 sucursal"), yes("Hasta 3 Usuarios"), yes("Modo Mostrador básico"), yes("Cobro en efectivo"),
+          yes("Impresión de Tickets (Térmica) incluida"),
+          no("Mesas y mesero"), no("KDS pantalla cocina"), no("Kiosk autoservicio"), no("Promociones"),
         ],
       },
       {
@@ -69,15 +70,16 @@ const giros: Giro[] = [
     ],
   },
   {
-    label: "Café",
-    subtitle: "Cafeterías, juguerías, panaderías",
+    label: "Comida Rápida y Cafés",
+    subtitle: "Cafeterías, taquerías, food trucks, juguerías",
     slug: "cafe",
     plans: [
       {
         name: "Gratis", slug: "free", price: "Gratis",
         features: [
-          yes("Hasta 50 productos"), yes("1 sucursal, 2 usuarios"), yes("Modo Mostrador básico"), yes("Cobro en efectivo"),
-          no("Kiosk autoservicio"), no("Comandas / KDS"), no("Impresora térmica"), no("Promociones"), no("Reportes"),
+          yes("Hasta 50 productos"), yes("1 sucursal"), yes("Hasta 3 Usuarios"), yes("Modo Mostrador básico"), yes("Cobro en efectivo"),
+          yes("Impresión de Tickets (Térmica) incluida"),
+          no("Kiosk autoservicio"), no("Comandas / KDS"), no("Promociones"), no("Reportes"),
         ],
       },
       {
@@ -104,50 +106,16 @@ const giros: Giro[] = [
     ],
   },
   {
-    label: "Bar",
-    subtitle: "Bares, cantinas, antros",
-    slug: "bar",
-    plans: [
-      {
-        name: "Gratis", slug: "free", price: "Gratis",
-        features: [
-          yes("Hasta 50 productos"), yes("1 sucursal, 2 usuarios"), yes("Modo Mostrador básico"),
-          no("Mesas y barra"), no("Consumo corrido"), no("Modo mesero"), no("Impresora térmica"), no("Promociones happy hour"), no("Reportes"),
-        ],
-      },
-      {
-        name: "Básico", slug: "basic", price: "$199", annualPrice: "$1,990",
-        features: [
-          yes("Productos ilimitados"), yes("Mesas + barra (zonas)"), yes("Consumo corrido"), yes("Modo mesero"),
-          yes("Impresora térmica"), yes("Promociones happy hour"), yes("Reportes básicos"), yes("Usuarios ilimitados"), no("CFDI / Facturación"),
-        ],
-      },
-      {
-        name: "Pro", slug: "pro", price: "$499", annualPrice: "$4,990", popular: true,
-        features: [
-          yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Programa de lealtad"),
-          yes("Clientes y fiado"), yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
-        ],
-      },
-      {
-        name: "Enterprise", slug: "enterprise", price: "$999", annualPrice: "$9,990",
-        features: [
-          yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
-          yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
-        ],
-      },
-    ],
-  },
-  {
-    label: "Abarrotes / Retail",
+    label: "Tiendas y Comercios",
     subtitle: "Abarrotes, farmacias, ferreterías, papelerías",
     slug: "retail",
     plans: [
       {
         name: "Gratis", slug: "free", price: "Gratis",
         features: [
-          yes("Hasta 50 productos"), yes("1 sucursal, 2 usuarios"), yes("Cobro básico"), yes("Folios de venta"),
-          no("Escáner de barras"), no("Impresora térmica"), no("Promociones"), no("Clientes y fiado"), no("Reportes"),
+          yes("Hasta 50 productos"), yes("1 sucursal"), yes("Hasta 3 Usuarios"), yes("Cobro básico"), yes("Folios de venta"),
+          yes("Impresión de Tickets (Térmica) incluida"),
+          no("Escáner de barras"), no("Promociones"), no("Clientes y fiado"), no("Reportes"),
         ],
       },
       {
@@ -174,50 +142,16 @@ const giros: Giro[] = [
     ],
   },
   {
-    label: "Food Truck",
-    subtitle: "Taquerías, puestos, carritos",
-    slug: "foodtruck",
-    plans: [
-      {
-        name: "Gratis", slug: "free", price: "Gratis",
-        features: [
-          yes("Hasta 50 productos"), yes("1 sucursal, 2 usuarios"), yes("Cobro rápido"), yes("Modo sin mesas"),
-          no("Kiosk autoservicio"), no("Impresora térmica"), no("Escáner de barras"), no("Promociones"), no("Reportes"),
-        ],
-      },
-      {
-        name: "Básico", slug: "basic", price: "$149", annualPrice: "$1,490", popular: true,
-        features: [
-          yes("Productos ilimitados"), yes("Kiosk autoservicio"), yes("Impresora térmica"), yes("Escáner de barras"),
-          yes("Promociones y cupones"), yes("Reportes de ventas"), yes("Usuarios ilimitados"), no("CFDI / Facturación"), no("Multi-sucursal"),
-        ],
-      },
-      {
-        name: "Pro", slug: "pro", price: "$349", annualPrice: "$3,490",
-        features: [
-          yes("Todo lo de Básico"), yes("Hasta 3 sucursales"), yes("CFDI / Facturación"), yes("Programa de lealtad"),
-          yes("Reportes avanzados"), no("API access"), no("Soporte prioritario"),
-        ],
-      },
-      {
-        name: "Enterprise", slug: "enterprise", price: "$799", annualPrice: "$7,990",
-        features: [
-          yes("Todo lo de Pro"), yes("Sucursales ilimitadas"), yes("API access"), yes("Soporte prioritario"),
-          yes("Marca personalizada"), yes("Onboarding dedicado"), yes("SLA garantizado"),
-        ],
-      },
-    ],
-  },
-  {
-    label: "General",
-    subtitle: "Bazares, servicios, uñas, cualquier negocio",
+    label: "Servicios Especializados",
+    subtitle: "Salones, estéticas, servicios, cualquier negocio",
     slug: "general",
     plans: [
       {
         name: "Gratis", slug: "free", price: "Gratis",
         features: [
-          yes("Hasta 50 productos"), yes("1 sucursal, 2 usuarios"), yes("Cobro básico"), yes("Folios de venta"),
-          no("Impresora térmica"), no("Escáner de barras"), no("Promociones"), no("Más usuarios"), no("Reportes"),
+          yes("Hasta 50 productos"), yes("1 sucursal"), yes("Hasta 3 Usuarios"), yes("Cobro básico"), yes("Folios de venta"),
+          yes("Impresión de Tickets (Térmica) incluida"),
+          no("Escáner de barras"), no("Promociones"), no("Reportes"),
         ],
       },
       {
@@ -260,7 +194,7 @@ export default function PricingSection() {
 
         {/* Giro tabs */}
         <div className="flex justify-center mb-8">
-          <div className="flex gap-2 overflow-x-auto pb-2 px-1 max-w-full">
+          <div className="flex flex-wrap justify-center gap-2 pb-2 px-1 max-w-full">
             {giros.map((giro, i) => (
               <button
                 key={giro.slug}
