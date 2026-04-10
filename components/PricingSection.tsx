@@ -3,6 +3,7 @@
 import { useState } from "react";
 import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
+import BrioMascot, { type GiroSlug } from "./ui/BrioMascot";
 import type { BillingCycle } from "../lib/stripe-prices";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
@@ -189,8 +190,13 @@ export default function PricingSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title="Planes para cada negocio"
-          subtitle="14 días de prueba gratis en cualquier plan. Sin tarjeta requerida."
+          subtitle="Empieza gratis. Sube de plan cuando crezcas."
         />
+
+        {/* Mascota según giro activo */}
+        <div className="flex justify-center mb-6 transition-all duration-300">
+          <BrioMascot giro={currentGiro.slug as GiroSlug} size={72} />
+        </div>
 
         {/* Giro tabs */}
         <div className="flex justify-center mb-8">
@@ -245,20 +251,22 @@ export default function PricingSection() {
           {currentGiro.plans.map((plan) => (
             <div
               key={plan.slug}
-              className={`relative flex flex-col border rounded-xl p-6 transition-all ${
+              className={`relative flex flex-col rounded-[14px] p-6 transition-all ${
                 plan.popular
-                  ? "border-primary-500 shadow-lg scale-[1.02]"
-                  : "border-gray-200"
+                  ? "border-2 border-primary-500 shadow-lg scale-[1.02]"
+                  : "border border-gray-200"
               }`}
             >
               {plan.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-medium px-3 py-1 rounded-full">
-                  Más popular
+                <span
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-[10px] font-semibold tracking-[0.08em] px-3 py-1 rounded-full"
+                >
+                  MÁS POPULAR
                 </span>
               )}
 
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">{plan.name}</h3>
+                <h3 className="text-[15px] font-bold text-[#0f172a]" style={{ letterSpacing: "-0.3px" }}>{plan.name}</h3>
                 <div className="mt-2">
                   {plan.price === "Gratis" ? (
                     <span className="text-3xl font-bold text-gray-900">Gratis</span>

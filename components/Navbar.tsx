@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Button from "./ui/Button";
+import { useState } from "react";
+import BrioIcon from "./ui/BrioIcon";
 
 const navLinks = [
   { label: "Funciones", href: "#features" },
@@ -13,28 +13,15 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   return (
-    <nav
-      className={`sticky top-0 z-50 bg-white border-b transition-shadow duration-200 ${
-        scrolled ? "shadow-sm border-gray-200" : "border-transparent"
-      }`}
-    >
+    <nav className="sticky top-0 z-50 bg-[#0f172a] border-b border-[#1e293b]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-              <span className="text-white font-bold text-sm">K</span>
-            </div>
-            <span className="font-bold text-gray-900 text-lg">Kaja</span>
+            <BrioIcon size={32} />
+            <span className="font-bold text-white text-lg tracking-tight">Brío</span>
           </a>
 
           {/* Desktop nav */}
@@ -43,7 +30,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-[13px] text-[#64748b] hover:text-white transition-colors"
               >
                 {link.label}
               </a>
@@ -52,17 +39,23 @@ export default function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm" href={`${APP_URL}/login`}>
-              Iniciar sesión
-            </Button>
-            <Button variant="primary" size="sm" href={`${APP_URL}/register?plan=free&giro=general&country=MX`}>
+            <a
+              href={`${APP_URL}/login`}
+              className="text-[13px] text-[#64748b] hover:text-white transition-colors px-3 py-2"
+            >
+              Entrar
+            </a>
+            <a
+              href={`${APP_URL}/register?plan=free&giro=general&country=MX`}
+              className="inline-flex items-center justify-center bg-[#16a34a] hover:bg-[#15803d] text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
               Empezar gratis →
-            </Button>
+            </a>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+            className="md:hidden p-2 text-[#cbd5e1] hover:text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Abrir menú"
           >
@@ -81,25 +74,31 @@ export default function Navbar() {
 
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-white z-40">
+        <div className="md:hidden fixed inset-0 top-16 bg-[#0f172a] z-40">
           <div className="flex flex-col px-6 py-8 gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-lg text-gray-700 hover:text-gray-900"
+                className="text-lg text-[#cbd5e1] hover:text-white"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <hr className="border-gray-200" />
-            <Button variant="ghost" size="lg" href={`${APP_URL}/login`}>
-              Iniciar sesión
-            </Button>
-            <Button variant="primary" size="lg" href={`${APP_URL}/register?plan=free&giro=general&country=MX`}>
+            <hr className="border-[#1e293b]" />
+            <a
+              href={`${APP_URL}/login`}
+              className="text-base text-[#cbd5e1] hover:text-white"
+            >
+              Entrar
+            </a>
+            <a
+              href={`${APP_URL}/register?plan=free&giro=general&country=MX`}
+              className="inline-flex items-center justify-center bg-[#16a34a] hover:bg-[#15803d] text-white text-base font-semibold px-6 py-3 rounded-lg transition-colors"
+            >
               Empezar gratis →
-            </Button>
+            </a>
           </div>
         </div>
       )}

@@ -107,7 +107,7 @@ export default function FacturaWizard() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Servicio de facturación electrónica proporcionado por Kaja POS
+          Servicio de facturación electrónica proporcionado por Brío
         </p>
       </div>
     </div>

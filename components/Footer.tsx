@@ -1,3 +1,5 @@
+import BrioIcon from "./ui/BrioIcon";
+
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
 const footerLinks = [
@@ -16,13 +18,11 @@ export default function Footer() {
           {/* Col 1 — Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">K</span>
-              </div>
-              <span className="font-bold text-white text-lg">Kaja</span>
+              <BrioIcon size={32} />
+              <span className="font-bold text-white text-lg tracking-tight">Brío</span>
             </div>
             <p className="text-sm leading-relaxed">
-              Punto de venta simple para negocios que no paran.
+              La caja que cualquiera puede usar.
             </p>
           </div>
 
@@ -59,10 +59,10 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="mailto:hola@postactil.app"
+                  href="mailto:hola@briopos.app"
                   className="hover:text-white transition-colors"
                 >
-                  hola@postactil.app
+                  hola@briopos.app
                 </a>
               </li>
             </ul>
@@ -71,7 +71,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-          <span>© 2026 Kaja</span>
+          <span>© 2026 Brío</span>
           <div className="flex gap-4">
             <a href="#" className="hover:text-white transition-colors">Términos</a>
             <a href="#" className="hover:text-white transition-colors">Privacidad</a>

@@ -1,7 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import GiroSection from "@/components/GiroSection";
+import TresRazones from "@/components/TresRazones";
 import Features from "@/components/Features";
-import HowItWorks from "@/components/HowItWorks";
 import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
 
@@ -11,8 +12,9 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <GiroSection />
+        <TresRazones />
         <Features />
-        <HowItWorks />
         <PricingSection />
       </main>
       <Footer />

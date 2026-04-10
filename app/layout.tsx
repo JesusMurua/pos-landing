@@ -8,15 +8,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Kaja — Punto de venta simple para tu negocio",
+  title: "Brío — La caja que cualquiera puede usar",
   description:
-    "Software punto de venta para restaurantes, tiendas, cafeterías y más. Funciona sin internet. Prueba 3 meses gratis.",
+    "Cobra, controla tu inventario y ve tus ventas. Funciona aunque se vaya el internet. Prueba Brío gratis.",
   openGraph: {
-    title: "Kaja — Punto de venta simple para tu negocio",
+    title: "Brío — La caja que cualquiera puede usar",
     description:
-      "Software punto de venta para restaurantes, tiendas, cafeterías y más. Funciona sin internet. Prueba 3 meses gratis.",
-    url: "https://postactil.app",
-    siteName: "Kaja",
+      "Cobra, controla tu inventario y ve tus ventas. Funciona aunque se vaya el internet. Prueba Brío gratis.",
+    url: "https://briopos.app",
+    siteName: "Brío",
     locale: "es_MX",
     type: "website",
   },

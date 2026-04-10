@@ -4,15 +4,15 @@ import Footer from "@/components/Footer";
 import FacturaWizard from "@/components/factura/FacturaWizard";
 
 export const metadata: Metadata = {
-  title: "Facturación - Kaja",
+  title: "Facturación - Brío",
   description:
-    "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan Kaja POS.",
+    "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan Brío.",
   openGraph: {
-    title: "Facturación - Kaja",
+    title: "Facturación - Brío",
     description:
-      "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra.",
-    url: "https://postactil.app/factura",
-    siteName: "Kaja",
+      "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan Brío.",
+    url: "https://briopos.app/factura",
+    siteName: "Brío",
     locale: "es_MX",
     type: "website",
   },
