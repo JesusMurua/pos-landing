@@ -7,7 +7,7 @@ const footerLinks = [
   { label: "Features", href: "#features" },
   { label: "Precios", href: "#precios" },
   { label: "Login", href: `${APP_URL}/login` },
-  { label: "Registro", href: `${APP_URL}/register?plan=free&giro=general&country=MX` },
+  { label: "Registro", href: `${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly` },
 ];
 
 export default function Footer() {

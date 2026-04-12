@@ -4,7 +4,7 @@ import { useState } from "react";
 import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
 import BrioMascot, { type GiroSlug } from "./ui/BrioMascot";
-import type { BillingCycle } from "../lib/stripe-prices";
+import { getPriceId, type BillingCycle, type PlanSlug } from "../lib/stripe-prices";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
@@ -27,6 +27,13 @@ interface Giro {
 const f = (label: string, included: boolean) => ({ label, included });
 const yes = (label: string) => f(label, true);
 const no = (label: string) => f(label, false);
+
+const GIRO_PLAN_MATRIX: Record<string, PlanSlug[]> = {
+  restaurant: ["free", "basic", "pro", "enterprise"],
+  cafe: ["free", "basic", "pro"],
+  retail: ["free", "basic", "pro"],
+  general: ["free", "pro"],
+};
 
 function formatMonthlyFromAnnual(annualPrice: string): string {
   const num = parseInt(annualPrice.replace(/[$,]/g, ""), 10);
@@ -184,6 +191,16 @@ export default function PricingSection() {
   const [activeGiro, setActiveGiro] = useState(0);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
   const currentGiro = giros[activeGiro];
+  const visiblePlans = currentGiro.plans.filter((p) =>
+    (GIRO_PLAN_MATRIX[currentGiro.slug] ?? []).includes(p.slug as PlanSlug)
+  );
+
+  const gridClass =
+    visiblePlans.length === 2
+      ? "grid md:grid-cols-2 gap-8 max-w-3xl mx-auto"
+      : visiblePlans.length === 3
+        ? "grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+        : "grid sm:grid-cols-2 lg:grid-cols-4 gap-6";
 
   return (
     <section id="precios" className="py-20 md:py-28 bg-white">
@@ -247,8 +264,10 @@ export default function PricingSection() {
         </div>
 
         {/* Plan cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {currentGiro.plans.map((plan) => (
+        <div className={gridClass}>
+          {visiblePlans.map((plan) => {
+            const priceId = getPriceId(plan.slug as PlanSlug, currentGiro.slug, billingCycle);
+            return (
             <div
               key={plan.slug}
               className={`relative flex flex-col rounded-[14px] p-6 transition-all ${
@@ -312,13 +331,14 @@ export default function PricingSection() {
               <Button
                 variant={plan.popular ? "primary" : "outline"}
                 size="md"
-                href={`${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}&country=MX`}
+                href={`${APP_URL}/register?plan=${plan.slug}&giro=${currentGiro.slug}&country=MX&cycle=${billingCycle}${priceId ? `&priceId=${priceId}` : ""}`}
                 className="w-full"
               >
                 Empezar con este plan →
               </Button>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -39,7 +39,7 @@ export default function Hero() {
             {/* CTA row */}
             <div className="flex flex-col sm:flex-row gap-3 mt-1">
               <a
-                href={`${APP_URL}/register?plan=free&giro=general&country=MX`}
+                href={`${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly`}
                 className="inline-flex items-center justify-center bg-[#16a34a] hover:bg-[#15803d] text-white text-[14px] font-semibold px-6 py-3 rounded-lg transition-colors"
               >
                 Empezar gratis →
