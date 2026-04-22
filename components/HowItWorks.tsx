@@ -1,5 +1,6 @@
 import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
+import { DEFAULT_REGISTER_QUERY } from "../lib/pricing-definitions";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
@@ -69,7 +70,7 @@ export default function HowItWorks() {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="primary" size="lg" href={`${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly`}>
+          <Button variant="primary" size="lg" href={`${APP_URL}/register?${DEFAULT_REGISTER_QUERY}`}>
             Crear mi cuenta gratis →
           </Button>
         </div>

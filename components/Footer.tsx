@@ -1,4 +1,5 @@
 import BrioIcon from "./ui/BrioIcon";
+import { DEFAULT_REGISTER_QUERY } from "../lib/pricing-definitions";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
@@ -7,7 +8,7 @@ const footerLinks = [
   { label: "Features", href: "#features" },
   { label: "Precios", href: "#precios" },
   { label: "Login", href: `${APP_URL}/login` },
-  { label: "Registro", href: `${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly` },
+  { label: "Registro", href: `${APP_URL}/register?${DEFAULT_REGISTER_QUERY}` },
 ];
 
 export default function Footer() {

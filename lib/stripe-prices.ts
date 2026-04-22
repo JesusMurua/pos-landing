@@ -1,6 +1,6 @@
-export type PlanSlug = "free" | "basic" | "pro" | "enterprise";
-export type BillingCycle = "monthly" | "annual";
-export type PricingGroup = "Restaurant" | "Standard" | "General";
+import type { BillingCycle, PlanSlug, PricingGroup } from "./pricing-definitions";
+
+export type { BillingCycle, PlanSlug, PricingGroup };
 
 type PaidPlanSlug = Exclude<PlanSlug, "free">;
 
@@ -9,10 +9,10 @@ const giroToGroup: Record<string, PricingGroup> = {
   bar: "Restaurant",
   cafe: "Standard",
   "food-truck": "Standard",
-  foodtruck: "Standard",
   retail: "Standard",
   "abarrotes-retail": "Standard",
   general: "General",
+  services: "General",
 };
 
 const priceIds: Record<

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BrioIcon from "./ui/BrioIcon";
+import { DEFAULT_REGISTER_QUERY } from "../lib/pricing-definitions";
 
 const navLinks = [
   { label: "Funciones", href: "#features" },
@@ -46,7 +47,7 @@ export default function Navbar() {
               Entrar
             </a>
             <a
-              href={`${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly`}
+              href={`${APP_URL}/register?${DEFAULT_REGISTER_QUERY}`}
               className="inline-flex items-center justify-center bg-[#16a34a] hover:bg-[#15803d] text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
             >
               Empezar gratis →
@@ -94,7 +95,7 @@ export default function Navbar() {
               Entrar
             </a>
             <a
-              href={`${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly`}
+              href={`${APP_URL}/register?${DEFAULT_REGISTER_QUERY}`}
               className="inline-flex items-center justify-center bg-[#16a34a] hover:bg-[#15803d] text-white text-base font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               Empezar gratis →

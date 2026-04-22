@@ -1,3 +1,5 @@
+import { DEFAULT_REGISTER_QUERY } from "../lib/pricing-definitions";
+
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
 
 export default function Hero() {
@@ -39,7 +41,7 @@ export default function Hero() {
             {/* CTA row */}
             <div className="flex flex-col sm:flex-row gap-3 mt-1">
               <a
-                href={`${APP_URL}/register?plan=free&giro=general&country=MX&cycle=monthly`}
+                href={`${APP_URL}/register?${DEFAULT_REGISTER_QUERY}`}
                 className="inline-flex items-center justify-center bg-[#16a34a] hover:bg-[#15803d] text-white text-[14px] font-semibold px-6 py-3 rounded-lg transition-colors"
               >
                 Empezar gratis →
