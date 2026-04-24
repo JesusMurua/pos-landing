@@ -82,33 +82,86 @@ export const planNames: Record<PlanSlug, string> = {
   enterprise: "Enterprise",
 };
 
-export const planFeatures: Record<PlanSlug, string[]> = {
-  free: [
-    "1 sucursal",
-    "Hasta 100 ventas al mes",
-    "Base de clientes y Fiado",
-    "Tickets y Folios simples",
-  ],
-  basic: [
-    "Facturación CFDI",
-    "Folios personalizados",
-    "Pantalla de Cocina (KDS)",
-    "Plataformas de Delivery",
-    "Alertas de Inventario",
-  ],
-  pro: [
-    "3 sucursales",
-    "Reportes avanzados",
-    "Multi-bodega",
-    "Programa de Lealtad",
-    "App de Meseros",
-    "Kiosko autoservicio",
-  ],
-  enterprise: [
-    "Sucursales ilimitadas",
-    "API de acceso",
-    "Gerente dedicado",
-  ],
+export const planFeatures: Record<PlanSlug, Record<PricingGroup, string[]>> = {
+  free: {
+    Restaurant: [
+      "1 sucursal",
+      "Hasta 100 ventas al mes",
+      "Base de clientes y Fiado",
+      "Tickets y Folios simples",
+    ],
+    Standard: [
+      "1 sucursal",
+      "Hasta 100 ventas al mes",
+      "Base de clientes y Fiado",
+      "Tickets y Folios simples",
+    ],
+    General: [
+      "1 sucursal",
+      "Hasta 100 ventas al mes",
+      "Base de clientes y Fiado",
+      "Tickets y Folios simples",
+    ],
+  },
+  basic: {
+    Restaurant: [
+      "Facturación CFDI",
+      "Folios personalizados",
+      "Pantalla de Cocina (KDS)",
+      "Plataformas de Delivery",
+      "Alertas de Inventario",
+    ],
+    Standard: [
+      "Facturación CFDI",
+      "Folios personalizados",
+      "Alertas de Inventario",
+    ],
+    General: [
+      "Facturación CFDI",
+      "Folios personalizados",
+      "Recordatorios de citas",
+    ],
+  },
+  pro: {
+    Restaurant: [
+      "3 sucursales",
+      "Reportes avanzados",
+      "Multi-bodega",
+      "Programa de Lealtad",
+      "App de Meseros",
+      "Kiosko autoservicio",
+    ],
+    Standard: [
+      "3 sucursales",
+      "Reportes avanzados",
+      "Multi-bodega",
+      "Programa de Lealtad",
+      "Kiosko autoservicio",
+    ],
+    General: [
+      "3 sucursales",
+      "Reportes avanzados",
+      "Programa de Lealtad",
+      "Recordatorios de citas",
+    ],
+  },
+  enterprise: {
+    Restaurant: [
+      "Sucursales ilimitadas",
+      "API de acceso",
+      "Gerente dedicado",
+    ],
+    Standard: [
+      "Sucursales ilimitadas",
+      "API de acceso",
+      "Gerente dedicado",
+    ],
+    General: [
+      "Sucursales ilimitadas",
+      "API de acceso",
+      "Gerente dedicado",
+    ],
+  },
 };
 
 export const DEFAULT_REGISTER_QUERY = "plan=free&giro=restaurant&country=MX&cycle=monthly";
