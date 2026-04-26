@@ -1,4 +1,164 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+const CATALOG_API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://api.finomx.app/api";
+
+export interface PlanFeatureDto {
+  code: string;
+  name: string;
+  description?: string;
+  isQuantitative?: boolean;
+  applicableMacroCategoryIds?: number[];
+  defaultLimit?: number | null;
+  resourceLabel?: string | null;
+}
+
+export interface PlanDto {
+  id: number;
+  internalCode: string;
+  name: string;
+  monthlyPrice: number | null;
+  annualPrice: number | null;
+  trialDays: number;
+  features: (string | PlanFeatureDto)[];
+}
+
+const FALLBACK_PLANS: PlanDto[] = [
+  {
+    id: 1,
+    internalCode: "free",
+    name: "Gratis",
+    monthlyPrice: 0,
+    annualPrice: 0,
+    trialDays: 0,
+    features: [
+      "1 sucursal",
+      "Hasta 100 ventas al mes",
+      "Base de clientes y Fiado",
+      "Tickets y Folios simples",
+    ],
+  },
+  {
+    id: 2,
+    internalCode: "basic",
+    name: "Básico",
+    monthlyPrice: 199,
+    annualPrice: 1990,
+    trialDays: 14,
+    features: [
+      "Facturación CFDI",
+      "Folios personalizados",
+      "Pantalla de Cocina (KDS)",
+      "Plataformas de Delivery",
+      "Alertas de Inventario",
+    ],
+  },
+  {
+    id: 3,
+    internalCode: "pro",
+    name: "Pro",
+    monthlyPrice: 499,
+    annualPrice: 4990,
+    trialDays: 14,
+    features: [
+      "3 sucursales",
+      "Reportes avanzados",
+      "Multi-bodega",
+      "Programa de Lealtad",
+      "App de Meseros",
+      "Kiosko autoservicio",
+    ],
+  },
+  {
+    id: 4,
+    internalCode: "enterprise",
+    name: "Enterprise",
+    monthlyPrice: 999,
+    annualPrice: 9990,
+    trialDays: 14,
+    features: [
+      "Sucursales ilimitadas",
+      "API de acceso",
+      "Gerente dedicado",
+    ],
+  },
+];
+
+interface PlanApiResponse {
+  id: number;
+  code?: string;
+  internalCode?: string;
+  name: string;
+  sortOrder?: number;
+  monthlyPrice?: number | null;
+  annualPrice?: number | null;
+  currency?: string;
+  trialDays?: number;
+  features?: (string | PlanFeatureDto)[];
+}
+
+function normalizePlan(raw: PlanApiResponse): PlanDto {
+  const rawCode = raw.internalCode ?? raw.code ?? "";
+  return {
+    id: raw.id,
+    internalCode: rawCode.toLowerCase(),
+    name: raw.name,
+    monthlyPrice: raw.monthlyPrice ?? null,
+    annualPrice: raw.annualPrice ?? null,
+    trialDays: raw.trialDays ?? 0,
+    features: raw.features ?? [],
+  };
+}
+
+export async function getPlans(): Promise<PlanDto[]> {
+  try {
+    const res = await fetch(`${CATALOG_API_BASE}/catalog/plans`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return FALLBACK_PLANS;
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return FALLBACK_PLANS;
+    return (data as PlanApiResponse[]).map(normalizePlan);
+  } catch {
+    return FALLBACK_PLANS;
+  }
+}
+
+export interface BusinessTypeDto {
+  id: number;
+  macroCategory: string;
+  macroCategoryId?: number;
+  name: string;
+  slug: string;
+}
+
+const FALLBACK_BUSINESS_TYPES: BusinessTypeDto[] = [
+  { id: 1, macroCategoryId: 1, macroCategory: "Food & Beverage", name: "Restaurante", slug: "restaurante" },
+  { id: 2, macroCategoryId: 1, macroCategory: "Food & Beverage", name: "Bar", slug: "bar" },
+  { id: 3, macroCategoryId: 2, macroCategory: "Quick Service", name: "Taquería", slug: "taqueria" },
+  { id: 4, macroCategoryId: 2, macroCategory: "Quick Service", name: "Cafetería", slug: "cafeteria" },
+  { id: 5, macroCategoryId: 3, macroCategory: "Retail", name: "Abarrotes", slug: "abarrotes" },
+  { id: 6, macroCategoryId: 3, macroCategory: "Retail", name: "Farmacia", slug: "farmacia" },
+  { id: 7, macroCategoryId: 4, macroCategory: "Services", name: "Gimnasio", slug: "gimnasio" },
+  { id: 8, macroCategoryId: 4, macroCategory: "Services", name: "Estética", slug: "estetica" },
+];
+
+export async function getBusinessTypes(): Promise<BusinessTypeDto[]> {
+  try {
+    const res = await fetch(`${CATALOG_API_BASE}/catalog/businesstypes`, {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return FALLBACK_BUSINESS_TYPES;
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) return FALLBACK_BUSINESS_TYPES;
+    return data as BusinessTypeDto[];
+  } catch {
+    return FALLBACK_BUSINESS_TYPES;
+  }
+}
+
+export async function getBusinessTypeBySlug(slug: string): Promise<BusinessTypeDto | null> {
+  const all = await getBusinessTypes();
+  return all.find((b) => b.slug === slug) ?? null;
+}
 
 export interface TicketData {
   orderId: number;

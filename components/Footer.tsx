@@ -1,82 +1,81 @@
-import BrioIcon from "./ui/BrioIcon";
-import { DEFAULT_REGISTER_QUERY } from "../lib/pricing-definitions";
+import FinoLogo from "./landing/FinoLogo";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "";
+interface FooterColProps {
+  title: string;
+  links: string[];
+}
 
-const footerLinks = [
-  { label: "Inicio", href: "/" },
-  { label: "Features", href: "#features" },
-  { label: "Precios", href: "#precios" },
-  { label: "Login", href: `${APP_URL}/login` },
-  { label: "Registro", href: `${APP_URL}/register?${DEFAULT_REGISTER_QUERY}` },
-];
+function FooterCol({ title, links }: FooterColProps) {
+  return (
+    <div>
+      <h4 style={{ color: "white", fontWeight: 600, fontSize: 13, marginBottom: 16 }}>{title}</h4>
+      <ul
+        style={{
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+        }}
+      >
+        {links.map((l) => (
+          <li key={l}>
+            <a href="#" style={{ fontSize: 13, color: "#94a3b8", textDecoration: "none" }}>
+              {l}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer id="contacto" className="bg-gray-900 text-gray-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid md:grid-cols-3 gap-10 md:gap-8">
-          {/* Col 1 — Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <BrioIcon size={32} />
-              <span className="font-bold text-white text-lg tracking-tight">Brío</span>
-            </div>
-            <p className="text-sm leading-relaxed">
-              La caja que cualquiera puede usar.
-            </p>
-          </div>
-
-          {/* Col 2 — Links */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Enlaces</h4>
-            <ul className="space-y-2">
-              {footerLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3 — Contact */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4">Contacto</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="https://wa.me/5215500000000"
-                  className="hover:text-white transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  WhatsApp
-                </a>
-              </li>
-              <li>
-                <a
-                  href="mailto:hola@briopos.app"
-                  className="hover:text-white transition-colors"
-                >
-                  hola@briopos.app
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer id="contacto" style={{ background: "#0f172a", color: "#94a3b8", marginTop: 0 }}>
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "64px 32px",
+          display: "grid",
+          gridTemplateColumns: "2fr 1fr 1fr 1fr",
+          gap: 40,
+        }}
+      >
+        <div>
+          <FinoLogo />
+          <p style={{ fontSize: 13, lineHeight: 1.7, marginTop: 16, maxWidth: 280 }}>
+            El sistema de punto de venta hecho para que cualquier negocio cobre fácil.
+          </p>
         </div>
-
-        {/* Bottom bar */}
-        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-          <span>© 2026 Brío</span>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-white transition-colors">Términos</a>
-            <a href="#" className="hover:text-white transition-colors">Privacidad</a>
-          </div>
+        <FooterCol title="Producto" links={["Funciones", "Precios", "Para tu giro", "Hardware"]} />
+        <FooterCol title="Empresa" links={["Sobre nosotros", "Casos de éxito", "Blog", "Contacto"]} />
+        <FooterCol
+          title="Soporte"
+          links={["WhatsApp", "hola@finomx.app", "Centro de ayuda", "Estado del sistema"]}
+        />
+      </div>
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: "20px 32px",
+          borderTop: "1px solid #1e293b",
+          display: "flex",
+          justifyContent: "space-between",
+          fontSize: 12,
+        }}
+      >
+        <span>© 2026 Fino · Todos los derechos reservados</span>
+        <div style={{ display: "flex", gap: 16 }}>
+          <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>
+            Términos
+          </a>
+          <a href="#" style={{ color: "#94a3b8", textDecoration: "none" }}>
+            Privacidad
+          </a>
         </div>
       </div>
     </footer>

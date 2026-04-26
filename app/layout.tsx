@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,16 +7,23 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
-  title: "Brío — La caja que cualquiera puede usar",
+  title: "FINO | El sistema que se adapta a tu negocio",
   description:
-    "Cobra, controla tu inventario y ve tus ventas. Funciona aunque se vaya el internet. Prueba Brío gratis.",
+    "Flujo Inteligente de Negocios y Operaciones. Punto de venta 100% offline, facturación CFDI y control total.",
   openGraph: {
-    title: "Brío — La caja que cualquiera puede usar",
+    title: "FINO | El sistema que se adapta a tu negocio",
     description:
-      "Cobra, controla tu inventario y ve tus ventas. Funciona aunque se vaya el internet. Prueba Brío gratis.",
-    url: "https://briopos.app",
-    siteName: "Brío",
+      "Flujo Inteligente de Negocios y Operaciones. Punto de venta 100% offline, facturación CFDI y control total.",
+    url: "https://finomx.app",
+    siteName: "FINO",
     locale: "es_MX",
     type: "website",
   },
@@ -28,8 +35,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-MX" className={`${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col antialiased">{children}</body>
+    <html lang="es-MX" className={`${inter.variable} ${instrumentSerif.variable} h-full`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

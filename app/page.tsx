@@ -1,21 +1,16 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import GiroSection from "@/components/GiroSection";
-import TresRazones from "@/components/TresRazones";
-import Features from "@/components/Features";
-import PricingSection from "@/components/PricingSection";
 import Footer from "@/components/Footer";
+import HomeContent from "@/components/landing/HomeContent";
+import { getPlans } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+  const plans = await getPlans();
+
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
-        <GiroSection />
-        <TresRazones />
-        <Features />
-        <PricingSection />
+        <HomeContent plans={plans} />
       </main>
       <Footer />
     </>

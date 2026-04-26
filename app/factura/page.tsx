@@ -4,15 +4,15 @@ import Footer from "@/components/Footer";
 import FacturaWizard from "@/components/factura/FacturaWizard";
 
 export const metadata: Metadata = {
-  title: "Facturación - Brío",
+  title: "Facturación - FINO",
   description:
-    "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan Brío.",
+    "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan FINO.",
   openGraph: {
-    title: "Facturación - Brío",
+    title: "Facturación - FINO",
     description:
-      "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan Brío.",
-    url: "https://briopos.app/factura",
-    siteName: "Brío",
+      "Genera tu factura electrónica (CFDI) a partir de tu ticket de compra. Servicio gratuito para clientes de negocios que usan FINO.",
+    url: "https://finomx.app/factura",
+    siteName: "FINO",
     locale: "es_MX",
     type: "website",
   },

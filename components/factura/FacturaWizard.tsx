@@ -107,7 +107,7 @@ export default function FacturaWizard() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Servicio de facturación electrónica proporcionado por Brío
+          Servicio de facturación electrónica proporcionado por FINO
         </p>
       </div>
     </div>

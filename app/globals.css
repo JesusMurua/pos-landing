@@ -38,17 +38,3 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes brio-bob {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-7px); }
-}
-
-@keyframes brio-blink {
-  0%, 86%, 100% { transform: scaleY(1); }
-  91% { transform: scaleY(0.08); }
-}
-
-@keyframes brio-hat-pop {
-  0% { transform: translateY(-12px) scale(0.7); opacity: 0; }
-  100% { transform: translateY(0px) scale(1); opacity: 1; }
-}
